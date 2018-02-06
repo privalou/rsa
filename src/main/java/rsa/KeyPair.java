@@ -23,4 +23,15 @@ public class KeyPair {
         } while (n.bitLength()!= bitLength);
         fi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
     }
+
+    private BigInteger generatePublicExponent() {
+        while (true) {
+            Random random = new Random();
+            int length = pqBigLength + random.nextInt(fi.bitLength() - pqBigLength);
+            BigInteger exponent = new BigInteger(length, new Random());
+            if (exponent.compareTo(BigInteger.ONE) != 0
+                  && exponent.compareTo(fi) == -1
+                  && exponent.gcd(fi).compareTo(BigInteger.ONE) == 0) return exponent;
+        }
+    }
 }
