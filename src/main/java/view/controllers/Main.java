@@ -3,6 +3,9 @@ package view;
 import files.FileChipher;
 import files.KeyGenerator;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import rsa.PrivateKey;
 import rsa.PublicKey;
@@ -23,5 +26,12 @@ public class Main extends Application {
 
         FileChipher.encrypt("data.txt", publicKey, 512);
         FileChipher.decrypt("data.txt.rsa", "result.txt", privateKey);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/controllers/main.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Authorization");
+        primaryStage.show();
     }
 }
