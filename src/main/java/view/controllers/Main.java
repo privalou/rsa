@@ -27,7 +27,7 @@ public class Main extends Application {
         FileChipher.encrypt("data.txt", publicKey, 512);
         FileChipher.decrypt("data.txt.rsa", "result.txt", privateKey);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/controllers/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
