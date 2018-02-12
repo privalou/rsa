@@ -1,12 +1,14 @@
 package view.controllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +16,8 @@ import java.util.ResourceBundle;
 
 public class ControllerMain implements Initializable {
     private Desktop desktop = Desktop.getDesktop();
+
+    @FXML private Button findFileButton;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

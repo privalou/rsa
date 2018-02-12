@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import rsa.PrivateKey;
 import rsa.PublicKey;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
     public static void main(String[] args){
