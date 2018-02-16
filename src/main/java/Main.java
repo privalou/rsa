@@ -1,5 +1,3 @@
-package view.controllers;
-
 import files.FileChipher;
 import files.KeyGenerator;
 import javafx.application.Application;
