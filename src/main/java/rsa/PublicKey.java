@@ -1,6 +1,7 @@
 package rsa;
 
 import java.math.BigInteger;
+import java.security.Key;
 
 public class PublicKey {
     private BigInteger e;
@@ -15,16 +16,8 @@ public class PublicKey {
         return e;
     }
 
-    public void setE(BigInteger e) {
-        this.e = e;
-    }
-
     public BigInteger getN() {
         return n;
-    }
-
-    public void setN(BigInteger n) {
-        this.n = n;
     }
 
     public byte[] encrypt(byte[] plainText){

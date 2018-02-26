@@ -15,16 +15,8 @@ public class PrivateKey {
         return d;
     }
 
-    public void setD(BigInteger d) {
-        this.d = d;
-    }
-
     public BigInteger getN() {
         return n;
-    }
-
-    public void setN(BigInteger n) {
-        this.n = n;
     }
 
     public byte[] decrypt(byte[]cipherText){

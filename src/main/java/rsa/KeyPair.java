@@ -43,79 +43,11 @@ public class KeyPair {
         }
     }
 
-    public BigInteger getP() {
-        return p;
-    }
-
-    public void setP(BigInteger p) {
-        this.p = p;
-    }
-
-    public BigInteger getQ() {
-        return q;
-    }
-
-    public void setQ(BigInteger q) {
-        this.q = q;
-    }
-
-    public BigInteger getN() {
-        return n;
-    }
-
-    public void setN(BigInteger n) {
-        this.n = n;
-    }
-
-    public BigInteger getFi() {
-        return fi;
-    }
-
-    public void setFi(BigInteger fi) {
-        this.fi = fi;
-    }
-
-    public static int getBitLength() {
-        return bitLength;
-    }
-
-    public int getPqBigLength() {
-        return pqBigLength;
-    }
-
-    public void setPqBigLength(int pqBigLength) {
-        this.pqBigLength = pqBigLength;
-    }
-
-    public BigInteger getE() {
-        return e;
-    }
-
-    public void setE(BigInteger e) {
-        this.e = e;
-    }
-
-    public BigInteger getD() {
-        return d;
-    }
-
-    public void setD(BigInteger d) {
-        this.d = d;
-    }
-
     public PublicKey getPublicKey() {
         return publicKey;
     }
 
-    public void setPublicKey(PublicKey publicKey) {
-        this.publicKey = publicKey;
-    }
-
     public PrivateKey getPrivateKey() {
         return privateKey;
-    }
-
-    public void setPrivateKey(PrivateKey privateKey) {
-        this.privateKey = privateKey;
     }
 }
