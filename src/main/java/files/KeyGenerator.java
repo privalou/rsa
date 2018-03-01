@@ -21,6 +21,8 @@ public class KeyGenerator {
             privatePrintWrite.println(privateKey.getN());
             privatePrintWrite.println(privateKey.getD());
 
+            publicPrintWriter.close();
+            privatePrintWrite.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -30,6 +32,7 @@ public class KeyGenerator {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             BigInteger n = new BigInteger(reader.readLine());
             BigInteger e = new BigInteger(reader.readLine());
+            reader.close();
             return new PublicKey(e, n);
         }
     }
@@ -38,6 +41,7 @@ public class KeyGenerator {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             BigInteger n = new BigInteger(reader.readLine());
             BigInteger d = new BigInteger(reader.readLine());
+            reader.close();
             return new PrivateKey(d, n);
         }
     }

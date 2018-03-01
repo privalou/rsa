@@ -20,7 +20,7 @@ public class Main extends Application {
         PublicKey publicKey = KeyGenerator.loadPublicKey("test.public");
         PrivateKey privateKey = KeyGenerator.loadPrivateKey("test.private");
 
-        FileChipher.encrypt("data.txt", publicKey, 512);
+        FileChipher.encrypt("data.txt", publicKey, "Test");
         FileChipher.decrypt("data.txt.rsa", "result.txt", privateKey);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));

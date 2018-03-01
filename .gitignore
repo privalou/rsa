@@ -1,2 +1,5 @@
 .idea
 target/classes
+.txt
+.private
+.public
