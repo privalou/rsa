@@ -20,8 +20,8 @@ public class PublicKey {
         return n;
     }
 
-    public byte[] encrypt(byte[] plainText){
-        byte[] cipherText = RSAUtils.modPowByte(plainText,e,n);
+    public byte[] encrypt(byte[] plainText) {
+        byte[] cipherText = RSAUtils.modPowByte(plainText, e, n);
         return cipherText;
     }
 }

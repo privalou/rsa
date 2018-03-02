@@ -8,10 +8,10 @@ import java.io.*;
 import java.math.BigInteger;
 
 public class KeyGenerator {
-    public static void generate(String name){
+    public static void generate(String name) {
         KeyPair keyPair = new KeyPair();
-        try(PrintWriter publicPrintWriter = new PrintWriter(name+".public");
-            PrintWriter privatePrintWrite = new PrintWriter(name+".private")) {
+        try (PrintWriter publicPrintWriter = new PrintWriter(name + ".public");
+             PrintWriter privatePrintWrite = new PrintWriter(name + ".private")) {
 
             PublicKey publicKey = keyPair.getPublicKey();
             publicPrintWriter.println(publicKey.getN());

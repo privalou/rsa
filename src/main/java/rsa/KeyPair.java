@@ -15,8 +15,8 @@ public class KeyPair {
     private PublicKey publicKey;
     private PrivateKey privateKey;
 
-    public KeyPair(){
-        pqBigLength = bitLength/2;
+    public KeyPair() {
+        pqBigLength = bitLength / 2;
         do {
             //generate p
             p = BigInteger.probablePrime(pqBigLength, new Random());
@@ -24,12 +24,12 @@ public class KeyPair {
             q = BigInteger.probablePrime(pqBigLength, new Random());
             //multiply q and p
             n = p.multiply(q);
-        } while (n.bitLength()!= bitLength);
+        } while (n.bitLength() != bitLength);
         fi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
-        e=generatePublicExponent();
+        e = generatePublicExponent();
         d = e.modInverse(fi);
-        publicKey = new PublicKey(e,n);
-        privateKey = new PrivateKey(d,n);
+        publicKey = new PublicKey(e, n);
+        privateKey = new PrivateKey(d, n);
     }
 
     private BigInteger generatePublicExponent() {
@@ -38,8 +38,8 @@ public class KeyPair {
             int length = pqBigLength + random.nextInt(fi.bitLength() - pqBigLength);
             BigInteger exponent = new BigInteger(length, new Random());
             if (exponent.compareTo(BigInteger.ONE) != 0
-                  && exponent.compareTo(fi) == -1
-                  && exponent.gcd(fi).compareTo(BigInteger.ONE) == 0) return exponent;
+                    && exponent.compareTo(fi) == -1
+                    && exponent.gcd(fi).compareTo(BigInteger.ONE) == 0) return exponent;
         }
     }
 

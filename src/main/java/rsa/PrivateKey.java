@@ -19,7 +19,7 @@ public class PrivateKey {
         return n;
     }
 
-    public byte[] decrypt(byte[]cipherText){
-        return RSAUtils.modPowByte(cipherText,d,n);
+    public byte[] decrypt(byte[] cipherText) {
+        return RSAUtils.modPowByte(cipherText, d, n);
     }
 }

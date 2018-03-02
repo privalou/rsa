@@ -23,7 +23,7 @@ public class FileChipher {
             byte[] buffer = new byte[(int) fileSize];
             byte[] decryptedKey = publicKey.encrypt(secretKey.getEncoded());
             outputStream.write(decryptedKey);
-            while ( inputStream.read(buffer)!=-1) {
+            while (inputStream.read(buffer) != -1) {
                 outputStream.write(AESUtils.encrypt(secretKey, buffer));
             }
         } catch (FileNotFoundException e) {
@@ -33,16 +33,16 @@ public class FileChipher {
         }
     }
 
-    public static void decrypt(String filename, String resultFilename, PrivateKey privateKey){
+    public static void decrypt(String filename, String resultFilename, PrivateKey privateKey) {
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(filename));
-             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))){
+             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))) {
             byte[] encryptedKey = new byte[128];
             inputStream.read(encryptedKey);
             byte[] decrypterKey = privateKey.decrypt(encryptedKey);
-            SecretKey secretKey = new SecretKeySpec(decrypterKey,"AES");
+            SecretKey secretKey = new SecretKeySpec(decrypterKey, "AES");
             long fileSize = new File(filename).length() - AES_KEY_ZIE;
             byte[] buffer = new byte[(int) fileSize];
-            while ( inputStream.read(buffer)!=-1) {
+            while (inputStream.read(buffer) != -1) {
                 outputStream.write(AESUtils.decrypt(secretKey, buffer));
             }
 
