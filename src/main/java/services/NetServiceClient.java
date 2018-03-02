@@ -14,7 +14,7 @@ public class NetServiceClient {
 
     public NetServiceClient() {
         try {
-            this.socket = new Socket("localhost", 3222);
+            this.socket = new Socket("localhost", 9999);
             this.outputStream = new ObjectOutputStream(socket.getOutputStream());
             this.inputStream = new ObjectInputStream(socket.getInputStream());
         } catch (UnknownHostException e) {
@@ -35,5 +35,19 @@ public class NetServiceClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public PublicKey sendKeyRequest(){
+        PublicKey publicKey = null;
+        try{
+            outputStream.writeUTF(Messages.PUBLIC_KEY_REQUEST);
+            outputStream.flush();
+            publicKey = (PublicKey) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return publicKey;
     }
 }

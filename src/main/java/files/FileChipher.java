@@ -26,6 +26,8 @@ public class FileChipher {
             while (inputStream.read(buffer) != -1) {
                 outputStream.write(AESUtils.encrypt(secretKey, buffer));
             }
+            inputStream.close();
+            outputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -45,7 +47,8 @@ public class FileChipher {
             while (inputStream.read(buffer) != -1) {
                 outputStream.write(AESUtils.decrypt(secretKey, buffer));
             }
-
+            inputStream.close();
+            outputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

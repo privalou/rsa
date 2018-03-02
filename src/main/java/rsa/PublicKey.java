@@ -1,9 +1,10 @@
 package rsa;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.Key;
 
-public class PublicKey {
+public class PublicKey implements Serializable {
     private BigInteger e;
     private BigInteger n;
 
