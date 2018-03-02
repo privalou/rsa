@@ -8,8 +8,8 @@ public class ConsoleMain {
         KeyGenerator.generate("qwe");
         PublicKey publicKey = KeyGenerator.loadPublicKey("qwe.public");
         PrivateKey privateKey = KeyGenerator.loadPrivateKey("qwe.private");
-        FileChipher.encrypt("testData.txt", publicKey, "Zhopqa");
-        FileChipher.decrypt("testData.txt.aes", "testResult.txt", privateKey);
+        FileChipher.encrypt("data.txt", publicKey, "Zhopqa");
+        FileChipher.decrypt("data.txt.aes", "result.txt", privateKey);
 
     }
 }
