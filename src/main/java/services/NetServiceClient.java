@@ -25,6 +25,19 @@ public class NetServiceClient {
         }
     }
 
+    public NetServiceClient(Socket socket) {
+        try {
+            this.socket = socket;
+            this.outputStream = new ObjectOutputStream(socket.getOutputStream());
+            this.inputStream = new ObjectInputStream(socket.getInputStream());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Couldn't get I/O for the connection");
+            System.exit(-1);
+        }
+    }
+
     public void sendFile(String filename, PublicKey publicKey, String aesKey) {
         FileChipher.encrypt(filename, publicKey, aesKey);
         try {
@@ -37,9 +50,9 @@ public class NetServiceClient {
         }
     }
 
-    public PublicKey sendKeyRequest(){
+    public PublicKey sendKeyRequest() {
         PublicKey publicKey = null;
-        try{
+        try {
             outputStream.writeUTF(Messages.PUBLIC_KEY_REQUEST);
             outputStream.flush();
             publicKey = (PublicKey) inputStream.readObject();
