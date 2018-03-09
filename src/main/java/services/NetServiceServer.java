@@ -37,12 +37,15 @@ public class NetServiceServer extends Thread {
                         out.writeObject(publicKey);
                         out.flush();
                         break;
+                    case Messages.SENDING_BYTES:
+                        long size = in.readLong();
+                        byte[] data = new byte[(int) size];
+                        in.read(data);
+                        FileChipher.decryptBytes(data,privateKey,"result.txt");
+                        break;
                     default:
                         Thread.sleep(1000);
                         break;
-                    case Messages.SENDING_BYTES:
-                        byte[] buf = (byte[]) in.readObject();
-                        FileChipher.decryptBytes(buf,privateKey,"result.txt");
                 }
             }
             in.close();

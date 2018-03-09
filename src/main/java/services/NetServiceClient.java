@@ -54,10 +54,16 @@ public class NetServiceClient {
         FileChipher.encrypt(filename, publicKey, aesKey);
         try {
             outputStream.writeUTF(Messages.SENDING_BYTES);
+            outputStream.flush();
             File file = new File(filename + ".aes");
+            long fileSize = file.length();
+            outputStream.writeLong(fileSize);
+            outputStream.flush();
             InputStream inputStream = new FileInputStream(file);
             byte[] buf = new byte[(int) file.length()];
-            inputStream.read(buf);
+            while (inputStream.available()>0) {
+                inputStream.read(buf);
+            }
             outputStream.write(buf);
             outputStream.flush();
         } catch (IOException e) {
