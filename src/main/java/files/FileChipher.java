@@ -7,6 +7,7 @@ import utils.AESUtils;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileChipher {
@@ -55,13 +56,17 @@ public class FileChipher {
             e.printStackTrace();
         }
     }
-    public static void decryptBytes(byte[] buf, PrivateKey privateKey, String resultFilename){
+    public static void decryptBytes(byte[] data, PrivateKey privateKey, String resultFilename){
         try(BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))) {
-            byte[] encryptedKey = Arrays.copyOfRange(buf, 0, 127);
+            byte[] encryptedKey = new byte[128];
+            encryptedKey = Arrays.copyOfRange(data,0, encryptedKey.length);
             byte[] decryptedKey = privateKey.decrypt(encryptedKey);
-            SecretKey secretKey = new SecretKeySpec(decryptedKey, "AES");
-            byte[] data = Arrays.copyOfRange(buf, 127, buf.length);
-            outputStream.write(AESUtils.decrypt(secretKey,data));
+            String string = new String(decryptedKey);
+            SecretKey secretKey = new SecretKeySpec(decryptedKey,"AES");
+            long fileSize = data.length-AES_KEY_ZIE;
+            byte[] buffer = new byte[(int) fileSize];
+            buffer = Arrays.copyOfRange(data,encryptedKey.length, data.length);
+            outputStream.write(AESUtils.decrypt(secretKey, buffer));
             outputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
