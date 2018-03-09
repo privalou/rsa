@@ -50,6 +50,21 @@ public class NetServiceClient {
         }
     }
 
+    public void sendBytes(String filename, PublicKey publicKey, String aesKey) {
+        FileChipher.encrypt(filename, publicKey, aesKey);
+        try {
+            outputStream.writeUTF(Messages.SENDING_BYTES);
+            File file = new File(filename + ".aes");
+            InputStream inputStream = new FileInputStream(file);
+            byte[] buf = new byte[(int) file.length()];
+            inputStream.read(buf);
+            outputStream.write(buf);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public PublicKey sendKeyRequest() {
         PublicKey publicKey = null;
         try {

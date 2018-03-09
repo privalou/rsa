@@ -40,8 +40,8 @@ public class FileChipher {
              BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))) {
             byte[] encryptedKey = new byte[128];
             inputStream.read(encryptedKey);
-            byte[] decrypterKey = privateKey.decrypt(encryptedKey);
-            SecretKey secretKey = new SecretKeySpec(decrypterKey, "AES");
+            byte[] decryptedKey = privateKey.decrypt(encryptedKey);
+            SecretKey secretKey = new SecretKeySpec(decryptedKey, "AES");
             long fileSize = new File(filename).length() - AES_KEY_ZIE;
             byte[] buffer = new byte[(int) fileSize];
             while (inputStream.read(buffer) != -1) {
@@ -54,5 +54,20 @@ public class FileChipher {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static void decryptBytes(byte[] buf, PrivateKey privateKey, String resultFilename){
+        try(BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))) {
+            byte[] encryptedKey = Arrays.copyOfRange(buf, 0, 127);
+            byte[] decryptedKey = privateKey.decrypt(encryptedKey);
+            SecretKey secretKey = new SecretKeySpec(decryptedKey, "AES");
+            byte[] data = Arrays.copyOfRange(buf, 127, buf.length);
+            outputStream.write(AESUtils.decrypt(secretKey,data));
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

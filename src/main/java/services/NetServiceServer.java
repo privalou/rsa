@@ -6,7 +6,6 @@ import rsa.PublicKey;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.channels.FileChannel;
 
 public class NetServiceServer extends Thread {
 
@@ -32,12 +31,7 @@ public class NetServiceServer extends Thread {
                 switch (clientCommand.toLowerCase()) {
                     case Messages.SENDING_CIPHERED_FILE:
                         File file = (File) in.readObject();
-                        File destFile = new File("copy.aes");
-                        FileChannel source = new FileInputStream(file).getChannel();
-                        FileChannel destination = new FileOutputStream(destFile).getChannel();
-                        destination.transferFrom(source,0,source.size());
-                        source.close(); destination.close();
-                        FileChipher.decrypt(destFile.getName(), "result.txt", privateKey);
+                        FileChipher.decrypt(file.getName(), "result.txt", privateKey);
                         break;
                     case Messages.PUBLIC_KEY_REQUEST:
                         out.writeObject(publicKey);
@@ -46,6 +40,9 @@ public class NetServiceServer extends Thread {
                     default:
                         Thread.sleep(1000);
                         break;
+                    case Messages.SENDING_BYTES:
+                        byte[] buf = (byte[]) in.readObject();
+                        FileChipher.decryptBytes(buf,privateKey,"result.txt");
                 }
             }
             in.close();
