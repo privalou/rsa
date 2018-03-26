@@ -64,8 +64,7 @@ public class FileChipher {
             String string = new String(decryptedKey);
             SecretKey secretKey = new SecretKeySpec(decryptedKey,"AES");
             long fileSize = data.length-AES_KEY_ZIE;
-            byte[] buffer = new byte[(int) fileSize];
-            buffer = Arrays.copyOfRange(data,encryptedKey.length, data.length);
+            byte[] buffer = Arrays.copyOfRange(data,encryptedKey.length, data.length);
             outputStream.write(AESUtils.decrypt(secretKey, buffer));
             outputStream.close();
         } catch (FileNotFoundException e) {

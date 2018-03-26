@@ -25,4 +25,7 @@ public class PublicKey implements Serializable {
         byte[] cipherText = RSAUtils.modPowByte(plainText, e, n);
         return cipherText;
     }
+    public byte[] decrypt(byte[] cipherText) {
+        return RSAUtils.modPowByte(cipherText, e, n);
+    }
 }

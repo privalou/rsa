@@ -23,4 +23,8 @@ public class PrivateKey implements Serializable {
     public byte[] decrypt(byte[] cipherText) {
         return RSAUtils.modPowByte(cipherText, d, n);
     }
+    public byte[] encrypt(byte[] plainText) {
+        byte[] cipherText = RSAUtils.modPowByte(plainText, d, n);
+        return cipherText;
+    }
 }

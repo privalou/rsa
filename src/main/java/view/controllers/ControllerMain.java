@@ -37,6 +37,7 @@ public class ControllerMain implements Initializable {
         FileChooser fileChooser = new FileChooser();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
+        fileField.appendText(file.getName());
         if (file != null) {
             openFile(file);
         }
