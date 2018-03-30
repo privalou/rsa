@@ -29,6 +29,7 @@ public class ControllerMain implements Initializable {
     public TextField ipField;
     public TextField fileField;
     private Desktop desktop = Desktop.getDesktop();
+    private String filePath;
 
     @FXML
     private Button findFileButton;
@@ -47,6 +48,7 @@ public class ControllerMain implements Initializable {
             throwAlert(event, "Error", "Error", "You havent selected any file");
         } else {
             fileField.appendText(file.getName());
+            filePath = file.getPath();
         }
     }
 
@@ -70,8 +72,8 @@ public class ControllerMain implements Initializable {
             NetServiceClient netServiceClient = new NetServiceClient();
             PublicKey aeskey = netServiceClient.sendKeyRequest();
             if (fileField.getText() != "") {
-                String fileName = fileField.getText();
-                byte[] hash = ESignatureUtils.signFile(fileName);
+                String fileName = filePath;
+                byte[] hash = ESignatureUtils.signFile(filePath);
                 byte[] enchHash = privateKey.encrypt(hash);
                 netServiceClient.sendBytes(enchHash, publicKey, fileName, aeskey, "Test");
                 throwAlert(event, "Congratulations", "Wow", "You've just sent encrypted file." +

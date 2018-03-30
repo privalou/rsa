@@ -83,7 +83,7 @@ public class NetServiceClient {
             outputStream.flush();
             outputStream.writeObject(esKey);
             outputStream.flush();
-            outputStream.writeUTF(fileName);
+            outputStream.writeUTF(new File(fileName).getName());
             outputStream.flush();
             File file = new File(fileName + ".aes");
             long fileSize = file.length();

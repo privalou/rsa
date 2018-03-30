@@ -3,14 +3,16 @@ package utils;
 import org.apache.commons.codec.binary.Hex;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ESignatureUtils {
     private static final String ALGORITHM = "SHA-256";
 
-    public static byte[] signFile(String fileName) {
-        File file = new File(fileName);
+    public static byte[] signFile(String filePath) {
+        File file = new File(filePath);
         byte[] hash = makeHash(file);
         return hash;
     }
