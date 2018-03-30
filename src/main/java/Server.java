@@ -11,15 +11,15 @@ public class Server {
     static final int PORT = 9999;
 
     public static void main(String[] args) throws IOException {
-        KeyGenerator.generate("qwe");
+        KeyGenerator.generate("aes");
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(PORT);
         } catch (IOException e) {
             System.err.println("Could not listen on port:" + PORT + "");
         }
-        PublicKey publicKey = KeyGenerator.loadPublicKey("qwe.public");
-        PrivateKey privateKey = KeyGenerator.loadPrivateKey("qwe.private");
+        PublicKey publicKey = KeyGenerator.loadPublicKey("aes.public");
+        PrivateKey privateKey = KeyGenerator.loadPrivateKey("aes.private");
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();

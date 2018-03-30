@@ -36,6 +36,14 @@ public class FileChipher {
         }
     }
 
+    public static byte[] encryptedBytes(byte[] hash, PrivateKey privateKey, String aesKeyName){
+//        byte[] key = aesKeyName.getBytes();
+//        key = Arrays.copyOf(key, 16);
+//        SecretKey secretKey = new SecretKeySpec(key, "AES");
+        byte[] enchHash = privateKey.encrypt(hash);
+        return enchHash;
+    }
+
     public static void decrypt(String filename, String resultFilename, PrivateKey privateKey) {
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(filename));
              BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))) {
@@ -65,7 +73,8 @@ public class FileChipher {
             SecretKey secretKey = new SecretKeySpec(decryptedKey,"AES");
             long fileSize = data.length-AES_KEY_ZIE;
             byte[] buffer = Arrays.copyOfRange(data,encryptedKey.length, data.length);
-            outputStream.write(AESUtils.decrypt(secretKey, buffer));
+            byte[] bytesToWrite = AESUtils.decrypt(secretKey, buffer);
+            outputStream.write(bytesToWrite);
             outputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

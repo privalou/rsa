@@ -1,22 +1,30 @@
 package utils;
 
-import files.KeyGenerator;
 import org.apache.commons.codec.binary.Hex;
-import rsa.PrivateKey;
-import rsa.PublicKey;
 
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ESignatureUtils {
-    private static final String ALGORITH = "SHA-256";
+    private static final String ALGORITHM = "SHA-256";
 
-    public static byte[] signFile(String fileName, PrivateKey privateKey){
+    public static byte[] signFile(String fileName) {
         File file = new File(fileName);
+        byte[] hash = makeHash(file);
+        return hash;
+    }
+
+    public static boolean unsignFile(byte[] sourceHash, String fileName) {
+        File file = new File(fileName);
+        byte[] hash = makeHash(file);
+        return Hex.encodeHexString(hash).equals(Hex.encodeHexString(sourceHash));
+    }
+
+    private static byte[] makeHash(File file) {
         byte[] hash = null;
-        try(InputStream inputStream = new FileInputStream(file)){
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        try (InputStream inputStream = new FileInputStream(file)) {
+            MessageDigest digest = MessageDigest.getInstance(ALGORITHM);
             byte[] buf = new byte[(int) file.length()];
             while (inputStream.available() > 0) {
                 inputStream.read(buf);
@@ -31,4 +39,5 @@ public class ESignatureUtils {
         }
         return hash;
     }
+
 }

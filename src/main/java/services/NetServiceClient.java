@@ -1,6 +1,7 @@
 package services;
 
 import files.FileChipher;
+import rsa.PrivateKey;
 import rsa.PublicKey;
 
 import java.io.*;
@@ -56,6 +57,35 @@ public class NetServiceClient {
             outputStream.writeUTF(Messages.SENDING_BYTES);
             outputStream.flush();
             File file = new File(filename + ".aes");
+            long fileSize = file.length();
+            outputStream.writeLong(fileSize);
+            outputStream.flush();
+            InputStream inputStream = new FileInputStream(file);
+            byte[] buf = new byte[(int) file.length()];
+            while (inputStream.available()>0) {
+                inputStream.read(buf);
+            }
+            outputStream.write(buf);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendBytes(byte[] encryptedHash, PublicKey esKey, String fileName, PublicKey aesPK, String aesKey){
+        FileChipher.encrypt(fileName, aesPK, aesKey);
+        try {
+            outputStream.writeUTF(Messages.SENDING_SIGNED_MESSAGE);
+            outputStream.flush();
+            outputStream.write(encryptedHash.length);
+            outputStream.flush();
+            outputStream.write(encryptedHash);
+            outputStream.flush();
+            outputStream.writeObject(esKey);
+            outputStream.flush();
+            outputStream.writeUTF(fileName);
+            outputStream.flush();
+            File file = new File(fileName + ".aes");
             long fileSize = file.length();
             outputStream.writeLong(fileSize);
             outputStream.flush();

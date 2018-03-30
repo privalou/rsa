@@ -1,8 +1,10 @@
 package services;
 
 import files.FileChipher;
+import org.apache.commons.codec.binary.Hex;
 import rsa.PrivateKey;
 import rsa.PublicKey;
+import utils.ESignatureUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -43,6 +45,23 @@ public class NetServiceServer extends Thread {
                         in.read(data);
                         FileChipher.decryptBytes(data,privateKey,"result.txt");
                         break;
+                    case Messages.SENDING_SIGNED_MESSAGE:
+                        int hashSize = in.read();
+                        byte[] encHash = new byte[hashSize];
+                        while (in.available()>0){
+                            in.read(encHash);
+                        }
+                        PublicKey esKey = (PublicKey) in.readObject();
+                        String fileName = in.readUTF();
+                        byte[] decrHash = esKey.decrypt(encHash);
+                        long fileSize = in.readLong();
+                        byte[] encData = new byte[(int) fileSize];
+                        while (in.available()>0){
+                            in.read(encData);
+                        }
+                        FileChipher.decryptBytes(encData,privateKey, "result "+fileName);
+                        System.out.println(Hex.encodeHexString(decrHash));
+                        System.out.println(ESignatureUtils.unsignFile(decrHash, "result "+fileName));
                     default:
                         Thread.sleep(1000);
                         break;
