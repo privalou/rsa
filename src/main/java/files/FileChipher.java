@@ -7,7 +7,6 @@ import utils.AESUtils;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileChipher {
@@ -36,7 +35,7 @@ public class FileChipher {
         }
     }
 
-    public static byte[] encryptedBytes(byte[] hash, PrivateKey privateKey, String aesKeyName){
+    public static byte[] encryptedBytes(byte[] hash, PrivateKey privateKey, String aesKeyName) {
 //        byte[] key = aesKeyName.getBytes();
 //        key = Arrays.copyOf(key, 16);
 //        SecretKey secretKey = new SecretKeySpec(key, "AES");
@@ -64,15 +63,16 @@ public class FileChipher {
             e.printStackTrace();
         }
     }
-    public static void decryptBytes(byte[] data, PrivateKey privateKey, String resultFilename){
-        try(BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))) {
+
+    public static void decryptBytes(byte[] data, PrivateKey privateKey, String resultFilename) {
+        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(resultFilename))) {
             byte[] encryptedKey = new byte[128];
-            encryptedKey = Arrays.copyOfRange(data,0, encryptedKey.length);
+            encryptedKey = Arrays.copyOfRange(data, 0, encryptedKey.length);
             byte[] decryptedKey = privateKey.decrypt(encryptedKey);
             String string = new String(decryptedKey);
-            SecretKey secretKey = new SecretKeySpec(decryptedKey,"AES");
-            long fileSize = data.length-AES_KEY_ZIE;
-            byte[] buffer = Arrays.copyOfRange(data,encryptedKey.length, data.length);
+            SecretKey secretKey = new SecretKeySpec(decryptedKey, "AES");
+            long fileSize = data.length - AES_KEY_ZIE;
+            byte[] buffer = Arrays.copyOfRange(data, encryptedKey.length, data.length);
             byte[] bytesToWrite = AESUtils.decrypt(secretKey, buffer);
             outputStream.write(bytesToWrite);
             outputStream.close();

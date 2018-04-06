@@ -62,7 +62,7 @@ public class NetServiceClient {
             outputStream.flush();
             InputStream inputStream = new FileInputStream(file);
             byte[] buf = new byte[(int) file.length()];
-            while (inputStream.available()>0) {
+            while (inputStream.available() > 0) {
                 inputStream.read(buf);
             }
             outputStream.write(buf);
@@ -72,7 +72,7 @@ public class NetServiceClient {
         }
     }
 
-    public void sendBytes(byte[] encryptedHash, PublicKey esKey, String fileName, PublicKey aesPK, String aesKey){
+    public void sendBytes(byte[] encryptedHash, PublicKey esKey, String fileName, PublicKey aesPK, String aesKey) {
         FileChipher.encrypt(fileName, aesPK, aesKey);
         try {
             outputStream.writeUTF(Messages.SENDING_SIGNED_MESSAGE);
@@ -91,7 +91,7 @@ public class NetServiceClient {
             outputStream.flush();
             InputStream inputStream = new FileInputStream(file);
             byte[] buf = new byte[(int) file.length()];
-            while (inputStream.available()>0) {
+            while (inputStream.available() > 0) {
                 inputStream.read(buf);
             }
             outputStream.write(buf);

@@ -43,12 +43,12 @@ public class NetServiceServer extends Thread {
                         long size = in.readLong();
                         byte[] data = new byte[(int) size];
                         in.read(data);
-                        FileChipher.decryptBytes(data,privateKey,"result.txt");
+                        FileChipher.decryptBytes(data, privateKey, "result.txt");
                         break;
                     case Messages.SENDING_SIGNED_MESSAGE:
                         int hashSize = in.read();
                         byte[] encHash = new byte[hashSize];
-                        while (in.available()>0){
+                        while (in.available() > 0) {
                             in.read(encHash);
                         }
                         PublicKey esKey = (PublicKey) in.readObject();
@@ -56,12 +56,12 @@ public class NetServiceServer extends Thread {
                         byte[] decrHash = esKey.decrypt(encHash);
                         long fileSize = in.readLong();
                         byte[] encData = new byte[(int) fileSize];
-                        while (in.available()>0){
+                        while (in.available() > 0) {
                             in.read(encData);
                         }
-                        FileChipher.decryptBytes(encData,privateKey, "result "+fileName);
+                        FileChipher.decryptBytes(encData, privateKey, "result " + fileName);
                         System.out.println(Hex.encodeHexString(decrHash));
-                        System.out.println(ESignatureUtils.unsignFile(decrHash, "result "+fileName));
+                        System.out.println(ESignatureUtils.unsignFile(decrHash, "result " + fileName));
                     default:
                         Thread.sleep(1000);
                         break;
